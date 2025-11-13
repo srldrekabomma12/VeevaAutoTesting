@@ -12,8 +12,9 @@ Environment variables set:
 JAVA_HOME
 MAVEN_HOME
 
-VeevaAutoTesting/Architecture Diagram.png
 
+
+<img width="681" height="891" alt="Architecture Diagram" src="https://github.com/user-attachments/assets/3b1d239c-4f00-45d9-86e4-635ad61a1fd6" />
 
 
 **🗂️ Project Structure**
