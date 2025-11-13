@@ -1,0 +1,16 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="NBA Suite" parallel="tests" thread-count="2">
+    <test name="DP2TestRunner in firefox">
+        <parameter name="browser" value="firefox"/>
+        <classes>
+            <class name="runners.DP2TestRunner"/>
+        </classes>
+    </test>
+    <test name="CPTestRunner in chrome">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="runners.CPTestRunner"/>
+        </classes>
+    </test>
+
+</suite>
