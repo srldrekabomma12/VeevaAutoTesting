@@ -1,5 +1,7 @@
 **📖 Project Overview**
 
+<img width="681" height="891" alt="Architecture Diagram" src="https://github.com/user-attachments/assets/3b1d239c-4f00-45d9-86e4-635ad61a1fd6" />
+
 This is a Selenium + Cucumber + TestNG automation framework for Veeva web applications.
 It leverages Page Object Model (POM) design, supports parallel execution, retry logic, and generates Cucumber HTML & Extent Reports for detailed test results.
 
@@ -11,10 +13,6 @@ IDE: IntelliJ IDEA or Eclipse recommended
 Environment variables set:
 JAVA_HOME
 MAVEN_HOME
-
-
-
-<img width="681" height="891" alt="Architecture Diagram" src="https://github.com/user-attachments/assets/3b1d239c-4f00-45d9-86e4-635ad61a1fd6" />
 
 
 **🗂️ Project Structure**
