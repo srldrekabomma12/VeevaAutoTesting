@@ -12,6 +12,10 @@ Environment variables set:
 JAVA_HOME
 MAVEN_HOME
 
+VeevaAutoTesting/Architecture Diagram.png
+
+
+
 **🗂️ Project Structure**
 
 Veeva_WebTestAutomation/
