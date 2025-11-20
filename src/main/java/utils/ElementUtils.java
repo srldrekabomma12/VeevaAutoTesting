@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import java.time.Duration;
 import java.util.*;
 
-public class ElementUtils {
+public abstract class ElementUtils {
     public static JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
 
     private static WebDriver driver() {
@@ -85,6 +85,6 @@ public class ElementUtils {
     public static void scrollToFooterToEnd() {
         js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
     }
-
+    public abstract String getCurrentURL();
 
 }

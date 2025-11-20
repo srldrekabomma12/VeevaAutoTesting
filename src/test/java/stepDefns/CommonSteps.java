@@ -8,12 +8,13 @@ import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import pages.CP_Page;
 import utils.ConfigReader;
+import utils.ElementUtils;
 import utils.ExtentManager;
 //import utils.ExtentTestManager;
 
 import static utils.WaitUtils.waitForPageToLoad;
 
-public class CommonSteps {
+public class CommonSteps extends ElementUtils {
 
     private final WebDriver driver;
     private final ConfigReader config;
@@ -25,7 +26,8 @@ public class CommonSteps {
 
     @Then("^user validates url navigates to \"(.*)\"$")
     public void user_validates_url_navigates_to(String expectedUrl) {
-        String actualUrl = driver.getCurrentUrl();
+        String actualUrl=getCurrentURL();
+//        String actualUrl = driver.getCurrentUrl();
         System.out.println("Thread ID: " + Thread.currentThread().getId() + " | Expected: " + expectedUrl + " | Actual: " + actualUrl);
         Assert.assertEquals(actualUrl, expectedUrl, "❌ URL mismatch!");
         System.out.println("URL validated successfully: " + actualUrl);
@@ -37,5 +39,10 @@ public class CommonSteps {
 //        cP_Page = new CP_Page(DriverManager.getDriver(), Hooks.prop);
         DriverManager.getDriver().get(config.getProperty(url));
         waitForPageToLoad(30);
+    }
+
+    @Override
+    public String getCurrentURL() {
+        return driver.getCurrentUrl();
     }
 }
