@@ -22,7 +22,7 @@ public class DP1HomeSteps {
     }
 
     @Then("user fetches all values from particular hyperlink {string}")
-    public void user_fetches_all_values_from_particular_hyperlink(String hyperlinkName) {
+    public void user_fetches_all_values_from_particular_hyperlink(String hyperlinkName) throws IOException {
         dP1_Page.fetchValuesfromHyperlink(hyperlinkName);
     }
     

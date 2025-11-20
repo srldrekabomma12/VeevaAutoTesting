@@ -14,10 +14,8 @@ import static utils.ElementUtils.getDynamicXpath;
 import static utils.WaitUtils.waitForVisibility;
 
 public class DP1_Page {
-    List<String> arrList = new ArrayList<>();
     String jSONfl = ConfigReader.getInstance().getProperty("jsonFilePath");
-    JsonOrCSVDataReader reader = new JsonOrCSVDataReader();
-    List<String> actualSlides = reader.readSlidesFromJson().getTicketsSlides();
+
 
     private WebDriver driver;
     int timeout = ConfigReader.getInstance().getIntProperty("Timeout");
@@ -40,7 +38,10 @@ public class DP1_Page {
         mouseHover(getDynamicXpath(topHyperlinks, hyperlinkName));
     }
 
-    public void fetchValuesfromHyperlink(String hyperlinkName) {
+    public void fetchValuesfromHyperlink(String hyperlinkName) throws IOException {
+        var reader = new JsonOrCSVDataReader();
+        var actualSlides = reader.readSlidesFromJson().getTicketsSlides();
+        var arrList = new ArrayList<>();
         List<WebElement> listofValues = getListOfElements(listOfValuesUnderHyperlink, hyperlinkName);
         for (WebElement str : listofValues) {
             arrList.add(str.getAttribute("title"));

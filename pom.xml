@@ -178,7 +178,7 @@
                 <version>3.5.4</version>
                 <configuration>
                     <includes>
-                        <include>**/*DP2TestRunner.java</include>
+                        <include>**/*CPTestRunner.java</include>
 <!--                        <include>**/*CPTestRunner.java</include>-->
                     </includes>
 <!--                    <parallel>methods</parallel>-->

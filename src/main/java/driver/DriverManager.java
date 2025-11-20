@@ -17,20 +17,17 @@ public class DriverManager {
             return; // prevent duplicate browsers
         }
 
-        if (browser == null) browser = "chrome";
-
-        switch (browser.toLowerCase()) {
-            case "firefox":
+        tlDriver.set(switch (browser.toLowerCase())
+        {
+            case "firefox" -> {
                 WebDriverManager.firefoxdriver().setup();
-                tlDriver.set(new FirefoxDriver(new FirefoxOptions()));
-                break;
-
-            default:
+                yield new FirefoxDriver(new FirefoxOptions());
+            }
+            default -> {
                 WebDriverManager.chromedriver().setup();
-                tlDriver.set(new ChromeDriver(new ChromeOptions()));
-                break;
-        }
-
+                yield new ChromeDriver(new ChromeOptions());
+            }
+        });
         tlDriver.get().manage().window().maximize();
     }
 

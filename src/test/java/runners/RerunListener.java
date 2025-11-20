@@ -8,7 +8,7 @@ public class RerunListener implements IExecutionListener {
 
     @Override
     public void onExecutionFinish() {
-        File rerunFile = new File("target/rerun.txt");
+        var rerunFile = new File("target/rerun.txt");
 
         System.out.println("Checking rerun file: exists=" + rerunFile.exists() + ", length=" + rerunFile.length());
 
