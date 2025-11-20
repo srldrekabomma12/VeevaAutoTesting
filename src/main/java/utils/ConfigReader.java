@@ -1,38 +1,38 @@
 package utils;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
 public class ConfigReader {
-    //     * This method is used to load the properties from config.properties file
-//	 * @return it returns Properties prop object
-//	 */
-    private static Properties prop = new Properties();
 
-    public Properties init_prop() {
+    private static ConfigReader instance; // singleton instance
+    private Properties prop;
 
+    // private constructor prevents direct instantiation
+    private ConfigReader() {
         prop = new Properties();
         try {
             FileInputStream ip = new FileInputStream("./src/test/resources/config/config.properties");
             prop.load(ip);
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        return prop;
-
     }
-    
-    public static String getProperty(String key) {
+
+    // lazy initialization with synchronized for thread safety
+    public static synchronized ConfigReader getInstance() {
+        if (instance == null) {
+            instance = new ConfigReader();
+        }
+        return instance;
+    }
+
+    public String getProperty(String key) {
         return prop.getProperty(key);
     }
-    
-    public static int getIntProperty(String timeout) {
-        return Integer.parseInt(prop.getProperty(timeout));
+
+    public int getIntProperty(String key) {
+        return Integer.parseInt(prop.getProperty(key));
     }
 }

@@ -14,7 +14,7 @@ import static utils.ElementUtils.*;
 
 public class DP2_Page {
     private WebDriver driver;
-    int timeout = ConfigReader.getIntProperty("Timeout");
+    int timeout = ConfigReader.getInstance().getIntProperty("Timeout");
 
 
     By footerHyperlinks = By.xpath("//footer[@role='contentinfo']//*[contains(@class,'justify-start')]//ul//li//a");

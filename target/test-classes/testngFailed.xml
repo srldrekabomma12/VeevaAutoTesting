@@ -1,0 +1,22 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Veeva Project">
+
+    <listeners>
+        <listener class-name="runners.RerunListener"/>
+    </listeners>
+    <test name="failed scenrios">
+        <parameter name="browser" value="firefox"/>
+        <classes>
+            <class name="runners.FailedRunner"/>
+        </classes>
+    </test>
+  
+    <!-- FAILED SCENARIOS RUNNER -->
+<!--    <test name="03_ReRun Failed Scenarios" parallel="false">-->
+<!--        <parameter name="browser" value="chrome"/>-->
+<!--        <classes>-->
+<!--            <class name="runners.FailedRunner"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+
+</suite>

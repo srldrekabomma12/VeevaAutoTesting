@@ -13,14 +13,15 @@ import utils.RetryListener;
                 "pretty",
                 "json:target/cucumber-reports/cucumber.json",
                 "html:target/cucumber-reports/html-report.html",
-                "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"
+                "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",
+                "rerun:target/rerun.txt"
         },
         monochrome = true
 )
 @Listeners(RetryListener.class)
 public class DP2TestRunner extends AbstractTestNGCucumberTests {
     @Override
-    @DataProvider(parallel = true)
+    @DataProvider(parallel = false)
     public Object[][] scenarios() {
         return super.scenarios();
     }

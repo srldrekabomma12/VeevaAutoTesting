@@ -5,55 +5,49 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.Assert;
 import utils.ConfigReader;
 import utils.JsonOrCSVDataReader;
-
 import java.io.IOException;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
-
-import static utils.ElementUtils.getListOfElements;
-import static utils.ElementUtils.scrollToFooterToEnd;
+import java.util.*;
+import static utils.ElementUtils.*;
+import static utils.ElementUtils.getDynamicXpath;
+import static utils.WaitUtils.waitForVisibility;
 
 public class DP1_Page {
+    List<String> arrList = new ArrayList<>();
+    String jSONfl = ConfigReader.getInstance().getProperty("jsonFilePath");
+    JsonOrCSVDataReader reader = new JsonOrCSVDataReader();
+    List<String> actualSlides = reader.readSlidesFromJson().getTicketsSlides();
+
     private WebDriver driver;
-    int timeout = ConfigReader.getIntProperty("Timeout");
+    int timeout = ConfigReader.getInstance().getIntProperty("Timeout");
+    private int explicitWait;
+    private Properties prop;
 
-
-    By footerHyperlinks = By.xpath("//footer[@role='contentinfo']//*[contains(@class,'justify-start')]//ul//li//a");
-    By footerTag = By.xpath("//footer");
+    By topHyperlinks = By.xpath("//*[@aria-label='header-primary-menu']//preceding-sibling::*[contains(@href,'%s')]");
+    By listOfValuesUnderHyperlink = By.xpath("//*[@aria-label='header-primary-menu']//preceding-sibling::*[contains(@href,'%s')]/..//ul/li/a");
     JsonOrCSVDataReader jsonOrCSVDataReader = new JsonOrCSVDataReader();
-
-    public DP1_Page(WebDriver driver) {
+   
+    public DP1_Page(WebDriver driver, Properties prop) throws IOException {
         this.driver = DriverManager.getDriver();
         PageFactory.initElements(driver, this);
+        this.explicitWait = Integer.parseInt(prop.getProperty("explicit.wait"));
+        this.prop = prop;
+    }
+    
+    public void navigateToHyperlink(String hyperlinkName){
+        waitForVisibility(getDynamicXpath(topHyperlinks, hyperlinkName), explicitWait);
+        mouseHover(getDynamicXpath(topHyperlinks, hyperlinkName));
     }
 
-    public Set<Object> captureFooterHyperlinksAndValidateDuplicates() {
-        scrollToFooterToEnd();
-        List<WebElement> actSizeOfFeeds = getListOfElements(footerHyperlinks, "");
-        Set<Object> uniqueLinks = new LinkedHashSet<>();
-        Set<Object> duplicateLinks = new LinkedHashSet<>();
-        for (WebElement element : actSizeOfFeeds) {
-            String linkText = element.getText().trim();
-            // Skip empty links
-            if (linkText.isEmpty()) continue;
-            // If add() returns false, it's a duplicate
-            if (!uniqueLinks.add(linkText)) {
-                duplicateLinks.add(linkText);
-            }
+    public void fetchValuesfromHyperlink(String hyperlinkName) {
+        List<WebElement> listofValues = getListOfElements(listOfValuesUnderHyperlink, hyperlinkName);
+        for (WebElement str : listofValues) {
+            arrList.add(str.getAttribute("title"));
         }
-// Print results
-        System.out.println("Unique links: " + uniqueLinks);
-        System.out.println("Duplicate links: " + duplicateLinks);
-// Optionally assert no duplicates
-        Assert.assertTrue(duplicateLinks.isEmpty(), "Duplicate footer links found: " + duplicateLinks);
-        return uniqueLinks;
-    }
-
-    public void storesIntoAnyFile() throws IOException {
-        jsonOrCSVDataReader.JsonOrCSVDataReaderToStore(captureFooterHyperlinksAndValidateDuplicates());
+        System.out.println(arrList);
+       if((actualSlides.stream().allMatch(arrList::contains)) && (arrList.stream().allMatch(actualSlides::contains))){
+           System.out.println("Tickets slides match!");   
+       }
     }
 }

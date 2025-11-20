@@ -1,12 +1,16 @@
 package pages;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import utils.LoggerHelper;
+//import utils.LoggerHelper;
 import java.awt.*;
+import lombok.*;
+import utils.ConfigReader;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -14,20 +18,21 @@ import static utils.ElementUtils.*;
 import static utils.WaitUtils.*;
 
 
+@Slf4j
 public class CP_Page {
     static WebDriver driver;
     private int timeout;
     private int explicitWait;
-    private Properties prop;
+    private final ConfigReader config;;
 
-    public CP_Page(WebDriver driver, Properties prop) {
+    public CP_Page(WebDriver driver) {
         this.driver = driver;
-        this.prop = prop;
-        this.timeout = Integer.parseInt(prop.getProperty("Timeout"));
-        this.explicitWait = Integer.parseInt(prop.getProperty("explicit.wait"));
+        this.config = ConfigReader.getInstance();
+        this.timeout = Integer.parseInt(config .getProperty("Timeout"));
+        this.explicitWait = Integer.parseInt(config.getProperty("explicit.wait"));
     }
 
-    private final Logger log = LoggerHelper.getLogger(CP_Page.class);
+//    private final Logger log = LoggerHelper.getLogger(CP_Page.class);
 
     By dotMenu = By.xpath("//*[@aria-label='%s']");
     By optionFromMenu = By.xpath("//*[@aria-label='%s']/parent::*//nav//li/a[normalize-space(text())='%s']");
